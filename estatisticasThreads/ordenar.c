@@ -13,8 +13,7 @@ struct DadosThread
 typedef struct DadosThread Dados;
 
 // Protótipos das funções
-void *bubbleSort1(void *arg);
-void *bubbleSort2(void *arg);
+void *bubbleSort(void *arg);
 void mergeArrays(int arr1[], int n1, int arr2[], int n2, int res[]);
 
 int main(int argc, char *argv[])
@@ -41,8 +40,8 @@ int main(int argc, char *argv[])
     }
 
     // Criação das threads
-    pthread_create(&threads[0], NULL, bubbleSort1, &dados[0]);
-    pthread_create(&threads[1], NULL, bubbleSort2, &dados[1]);
+    pthread_create(&threads[0], NULL, bubbleSort, &dados[0]);
+    pthread_create(&threads[1], NULL, bubbleSort, &dados[1]);
 
     // Espera pelas threads terminarem
     for (int i = 0; i < THREADS; i++)
@@ -83,7 +82,7 @@ int main(int argc, char *argv[])
 }
 
 // Função de Bubble Sort para a 1ª metade do array
-void *bubbleSort1(void *arg)
+void *bubbleSort(void *arg)
 {
     Dados *dados = (Dados *)arg;
     int meio = dados->tam / 2;
@@ -101,17 +100,6 @@ void *bubbleSort1(void *arg)
             }
         }
     }
-
-    pthread_exit(NULL);
-}
-
-// Função de Bubble Sort para a 2ª metade do array
-void *bubbleSort2(void *arg)
-{
-    Dados *dados = (Dados *)arg;
-    int meio = dados->tam / 2;
-
-    int aux = 0;
 
     for (int i = meio; i < dados->tam; i++)
     {
